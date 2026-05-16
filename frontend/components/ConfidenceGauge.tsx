@@ -29,9 +29,9 @@ export default function ConfidenceGauge({ score }: ConfidenceGaugeProps) {
   }, [score])
 
   const getColor = (value: number) => {
-    if (value <= 40) return { bg: 'bg-red-500', stroke: '#ef4444', text: 'text-red-400' }
-    if (value <= 70) return { bg: 'bg-yellow-500', stroke: '#eab308', text: 'text-yellow-400' }
-    return { bg: 'bg-green-500', stroke: '#22c55e', text: 'text-green-400' }
+    if (value <= 40) return { bg: 'bg-red-500', stroke: '#dc2626', text: 'text-red-600' }
+    if (value <= 70) return { bg: 'bg-amber-500', stroke: '#d97706', text: 'text-amber-600' }
+    return { bg: 'bg-emerald-500', stroke: '#059669', text: 'text-emerald-600' }
   }
 
   const colors = getColor(score)
@@ -42,7 +42,7 @@ export default function ConfidenceGauge({ score }: ConfidenceGaugeProps) {
   const offset = circumference - (animatedScore / 100) * circumference
 
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
       <div className="flex flex-col items-center">
         {/* Circular Gauge */}
         <div className="relative mb-4">
@@ -53,7 +53,7 @@ export default function ConfidenceGauge({ score }: ConfidenceGaugeProps) {
               cy="80"
               r={radius}
               fill="none"
-              stroke="#374151"
+              stroke="#e5e7eb"
               strokeWidth="8"
             />
             {/* Progress circle */}
@@ -74,21 +74,21 @@ export default function ConfidenceGauge({ score }: ConfidenceGaugeProps) {
           {/* Score number in center */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
-              <span className={`text-4xl font-bold ${colors.text}`}>
+              <span className={`text-4xl font-semibold ${colors.text}`}>
                 {animatedScore}
               </span>
-              <span className="text-lg text-gray-500">/100</span>
+              <span className="text-lg text-gray-400">/100</span>
             </div>
           </div>
         </div>
 
         {/* Label */}
-        <p className="text-sm font-medium uppercase tracking-wider text-gray-500">
+        <p className="text-sm font-medium text-gray-500">
           Merge Confidence
         </p>
 
         {/* Visual bar indicator */}
-        <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-700">
+        <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-100">
           <div
             className={`h-full ${colors.bg} transition-all duration-1000`}
             style={{ width: `${animatedScore}%` }}
@@ -96,7 +96,7 @@ export default function ConfidenceGauge({ score }: ConfidenceGaugeProps) {
         </div>
 
         {/* Scale labels */}
-        <div className="mt-2 flex w-full justify-between text-xs text-gray-500">
+        <div className="mt-2 flex w-full justify-between text-xs text-gray-400">
           <span>High Risk</span>
           <span>Safe to Merge</span>
         </div>

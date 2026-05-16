@@ -15,18 +15,23 @@ export default function ResultCard({
 }: ResultCardProps) {
   const borderClass =
     variant === 'danger'
-      ? 'border-red-800 bg-red-950/30'
-      : 'border-gray-800 bg-gray-900'
+      ? 'border-red-200 bg-red-50'
+      : 'border-gray-200 bg-white'
+
+  const textClass =
+    variant === 'danger'
+      ? 'text-red-700'
+      : 'text-gray-600'
 
   return (
     <div
-      className={`card-hover rounded-xl border p-5 ${borderClass}`}
+      className={`card-hover rounded-lg border p-5 shadow-sm ${borderClass}`}
     >
       <div className="mb-3 flex items-center gap-2">
         <span className="text-xl">{icon}</span>
-        <h3 className="font-semibold text-white">{title}</h3>
+        <h3 className="font-medium text-gray-900">{title}</h3>
       </div>
-      <p className="leading-relaxed text-gray-300">{content}</p>
+      <p className={`leading-relaxed ${textClass}`}>{content}</p>
     </div>
   )
 }
