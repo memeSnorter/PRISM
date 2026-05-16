@@ -57,6 +57,16 @@ class AnalysisResult(BaseModel):
 
 def parse_pr_url(pr_url: str) -> tuple[str, str, int]:
     """Parse GitHub PR URL to extract owner, repo, and PR number."""
+    # Check if user provided an issue URL instead of a PR URL
+    issue_pattern = r"github\.com/([^/]+)/([^/]+)/issues/(\d+)"
+    if re.search(issue_pattern, pr_url):
+        raise ValueError(
+            "This is a GitHub Issue URL, not a Pull Request URL. "
+            "PRISM analyzes Pull Requests. Please provide a URL like: "
+            "https://github.com/owner/repo/pull/123"
+        )
+
+    # PR URL patterns
     patterns = [
         r"github\.com/([^/]+)/([^/]+)/pull/(\d+)",
         r"github\.com/([^/]+)/([^/]+)/pulls/(\d+)",
@@ -68,7 +78,10 @@ def parse_pr_url(pr_url: str) -> tuple[str, str, int]:
             owner, repo, pr_number = match.groups()
             return owner, repo, int(pr_number)
 
-    raise ValueError(f"Invalid GitHub PR URL: {pr_url}")
+    raise ValueError(
+        "Invalid GitHub PR URL. Please provide a URL like: "
+        "https://github.com/owner/repo/pull/123"
+    )
 
 
 def extract_linked_issues(body: str) -> list[int]:
