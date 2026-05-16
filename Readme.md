@@ -1,7 +1,7 @@
 # ◈ PRISM
 ### Pull Request Intelligence & Security Machine
 
-> **Understand what your code change REALLY affects.**  
+> **Understand what your code change REALLY affects.**
 > Local AI-powered intent drift detection for GitHub Pull Requests. Your code never leaves your machine.
 
 ![Status](https://img.shields.io/badge/status-hackathon--ready-7c3aed?style=flat-square)
@@ -13,7 +13,7 @@
 
 ## What is PRISM?
 
-Most AI code review tools tell you *how* your code is written.  
+Most AI code review tools tell you *how* your code is written.
 PRISM tells you whether your code does *what it claims to do*.
 
 PRISM analyzes a GitHub Pull Request and detects **Intent Drift** — the gap between what a PR *says* it does (title, description, linked issue) and what the diff *actually* changes. It then generates a **Merge Confidence Score** so your team knows the real risk before merging.
@@ -38,6 +38,9 @@ GitHub PR URL
       ↓
   PRISM Dashboard
   (confidence score · drift report · risk flags)
+      ↓
+  Take Action
+  (post AI comments · merge directly)
 ```
 
 ---
@@ -53,6 +56,10 @@ GitHub PR URL
 | 🚩 **Risk Flags** | Quick-scan badges for common risk patterns |
 | 🔒 **100% Local Inference** | Gemma 4 via LM Studio — zero external API calls |
 | 🔗 **Linked Issue Parsing** | Auto-fetches `Fixes #N` / `Closes #N` issues for full context |
+| 🔐 **GitHub OAuth Login** | Access all your public AND private repositories |
+| 📁 **Repository Browser** | Browse repos and PRs directly in the dashboard |
+| 💬 **AI-Generated Comments** | Generate and post review comments using Gemma |
+| 🔀 **Direct PR Merge** | Merge, squash, or rebase PRs directly from PRISM |
 
 ---
 
@@ -62,7 +69,7 @@ GitHub PR URL
 - Python 3.11+
 - FastAPI
 - PyGithub
-- OpenAI SDK (pointed at LM Studio's local server)
+- GitHub OAuth 2.0
 
 **Frontend**
 - Next.js 14 (App Router)
@@ -82,8 +89,8 @@ Before you begin, make sure you have:
 - [ ] Python 3.11 or higher
 - [ ] Node.js 18 or higher
 - [ ] [LM Studio](https://lmstudio.ai) installed
-- [ ] A GitHub Personal Access Token
 - [ ] Gemma 4 E2B (4.6B) downloaded in LM Studio
+- [ ] A GitHub OAuth App (for full features) OR a Personal Access Token
 
 ---
 
@@ -113,27 +120,34 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Open `.env` and add your GitHub token:
+Open `.env` and configure:
 
 ```env
-GITHUB_TOKEN=your_github_personal_access_token_here
+# For basic functionality (analyze public PRs)
+GITHUB_TOKEN=your_github_personal_access_token
+
+# For full functionality (OAuth login, private repos, comments, merge)
+GITHUB_CLIENT_ID=your_oauth_app_client_id
+GITHUB_CLIENT_SECRET=your_oauth_app_client_secret
+GITHUB_REDIRECT_URI=http://localhost:8000/api/auth/callback
+FRONTEND_URL=http://localhost:3000
+
+# LM Studio
 LM_STUDIO_URL=http://localhost:1234/v1
 LM_STUDIO_MODEL=gemma-4-e2b
 ```
 
-> **How to get a GitHub token:**  
-> GitHub → Settings → Developer Settings → Personal Access Tokens → Tokens (classic)  
-> Required scopes: `repo`, `read:org`
+> **Setting up GitHub OAuth (recommended):**
+> 1. Go to GitHub → Settings → Developer Settings → OAuth Apps
+> 2. Click "New OAuth App"
+> 3. Set Homepage URL: `http://localhost:3000`
+> 4. Set Authorization callback URL: `http://localhost:8000/api/auth/callback`
+> 5. Copy the Client ID and Client Secret to your `.env`
 
 Start the backend:
 
 ```bash
 uvicorn main:app --reload --port 8000
-```
-
-You should see:
-```
-INFO: Uvicorn running on http://127.0.0.1:8000
 ```
 
 ### Step 4 — Set up the frontend
@@ -150,21 +164,19 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Usage
 
-1. Find any **public or private GitHub PR URL** you have access to
-2. Paste it into the PRISM input field:
-   ```
-   https://github.com/owner/repo/pull/42
-   ```
-3. Click **Analyze PR**
-4. Wait ~10–20 seconds for local inference
-5. Review the results:
-   - **Merge Confidence Score** — is this PR safe to merge?
-   - **Intent Match** — HIGH / MEDIUM / LOW alignment
-   - **Drift Banner** — clear verdict on whether drift was detected
-   - **Claimed vs Actual** — side-by-side intent comparison
-   - **Suspicious Files** — files that shouldn't be in this PR
-   - **Risk Flags** — quick-scan badges
-   - **PRISM Assessment** — senior-engineer-level summary
+### Quick Analysis (No Login Required)
+1. Paste any **public GitHub PR URL** into the input field
+2. Click **Analyze PR**
+3. View the intent drift analysis
+
+### Full Features (With GitHub Login)
+1. Click **Login with GitHub** in the header
+2. Authorize PRISM to access your repositories
+3. Browse your repositories in the **Dashboard**
+4. Select a repo → view its PRs → click to analyze
+5. After analysis, you can:
+   - **Generate AI Comment**: Create a review comment using Gemma
+   - **Merge PR**: Merge directly with your preferred method (merge/squash/rebase)
 
 ---
 
@@ -173,23 +185,29 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```
 prism/
 ├── backend/
-│   ├── main.py                 ← FastAPI app, GitHub fetch, LM Studio call
+│   ├── main.py                 ← FastAPI app with OAuth, analysis, PR actions
 │   ├── requirements.txt
 │   ├── .env.example
 │   └── .env                    ← your secrets (gitignored)
 │
 ├── frontend/
 │   ├── app/
-│   │   ├── page.tsx            ← home page + results view
+│   │   ├── page.tsx            ← home page + quick analysis
 │   │   ├── layout.tsx
-│   │   └── globals.css
+│   │   ├── globals.css
+│   │   ├── auth/callback/      ← OAuth callback handler
+│   │   └── dashboard/          ← authenticated dashboard
 │   ├── components/
+│   │   ├── Header.tsx          ← navigation with auth state
 │   │   ├── PRISMInput.tsx      ← PR URL input
 │   │   ├── LoadingState.tsx    ← animated loading steps
 │   │   ├── ConfidenceGauge.tsx ← score display
 │   │   ├── DriftBanner.tsx     ← drift detected / aligned banner
 │   │   ├── ResultCard.tsx      ← intent comparison cards
 │   │   └── RiskFlags.tsx       ← risk badge list
+│   ├── lib/
+│   │   ├── auth.tsx            ← authentication context
+│   │   └── api.ts              ← API client functions
 │   ├── package.json
 │   └── tailwind.config.ts
 │
@@ -200,15 +218,33 @@ prism/
 
 ## API Reference
 
-### `POST /api/analyze`
+### Authentication
 
+#### `GET /api/auth/login`
+Initiate GitHub OAuth flow. Returns `{ auth_url }` to redirect user.
+
+#### `GET /api/auth/callback`
+OAuth callback handler. Exchanges code for token and redirects to frontend.
+
+#### `GET /api/auth/user`
+Get current authenticated user info. Requires `Authorization: Bearer <token>`.
+
+### Repositories & PRs
+
+#### `GET /api/repos`
+List all repositories accessible to the authenticated user.
+
+#### `GET /api/repos/{owner}/{repo}/pulls`
+List pull requests for a repository. Query params: `state=open|closed|all`
+
+### Analysis
+
+#### `POST /api/analyze`
 Analyze a GitHub PR for intent drift.
 
-**Request body:**
+**Request:**
 ```json
-{
-  "pr_url": "https://github.com/owner/repo/pull/42"
-}
+{ "pr_url": "https://github.com/owner/repo/pull/42" }
 ```
 
 **Response:**
@@ -217,23 +253,40 @@ Analyze a GitHub PR for intent drift.
   "merge_confidence_score": 34,
   "intent_match": "LOW",
   "claimed_intent": "Fixes a UI styling bug on the login page",
-  "actual_changes": "Modifies payment authorization middleware and token refresh logic",
+  "actual_changes": "Modifies payment authorization middleware",
   "drift_detected": true,
-  "drift_reason": "The PR claims to fix UI styling but the diff primarily touches auth and payment files unrelated to the frontend.",
-  "suspicious_files": ["src/auth/middleware.ts", "src/payments/retry.ts"],
-  "risk_flags": ["Auth logic modified", "No tests added", "Payment flow changed"],
-  "summary": "This PR has significant intent drift. The stated goal is cosmetic but the actual changes touch critical backend systems. This should not be merged without a full security review."
+  "drift_reason": "PR claims UI fix but touches auth/payment code",
+  "suspicious_files": ["src/auth/middleware.ts"],
+  "risk_flags": ["Auth logic modified", "No tests added"],
+  "summary": "Significant intent drift detected...",
+  "pr_url": "https://github.com/owner/repo/pull/42",
+  "pr_number": 42,
+  "owner": "owner",
+  "repo": "repo"
 }
 ```
 
-### `GET /api/health`
+### PR Actions
 
-Check if LM Studio and GitHub are reachable.
+#### `POST /api/repos/{owner}/{repo}/pulls/{pr_number}/comment`
+Add a comment to a pull request.
+
+#### `POST /api/repos/{owner}/{repo}/pulls/{pr_number}/merge`
+Merge a pull request. Body: `{ "merge_method": "merge|squash|rebase" }`
+
+#### `POST /api/generate-comment`
+Generate an AI-powered review comment using Gemma.
+
+### Health
+
+#### `GET /api/health`
+Check system status.
 
 ```json
 {
   "lm_studio": true,
-  "github": true
+  "github": true,
+  "oauth_configured": true
 }
 ```
 
@@ -250,6 +303,11 @@ Check if LM Studio and GitHub are reachable.
 - Verify your `GITHUB_TOKEN` in `.env` is valid and not expired
 - Make sure the token has `repo` scope
 - For private repos, ensure the token has access to that organization
+
+**OAuth not working**
+- Verify `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` are set
+- Check the callback URL matches exactly: `http://localhost:8000/api/auth/callback`
+- Make sure `FRONTEND_URL` is set to `http://localhost:3000`
 
 **Malformed JSON from Gemma**
 - This is normal occasionally — PRISM automatically retries with a stricter prompt
@@ -270,11 +328,16 @@ Check if LM Studio and GitHub are reachable.
 | Comments line by line | Reasons over the whole PR |
 | No privacy guarantees | Code never leaves your machine |
 | Reactive | Proactive risk intelligence |
+| Read-only | Can comment and merge directly |
 
 ---
 
 ## Roadmap
 
+- [x] GitHub OAuth integration
+- [x] Repository browser dashboard
+- [x] AI-generated review comments
+- [x] Direct PR merge from UI
 - [ ] GitHub App integration (auto-trigger on PR open)
 - [ ] Dependency impact graph ("what else does this touch?")
 - [ ] Merge Confidence history tracking per repo
