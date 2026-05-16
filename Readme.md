@@ -3,12 +3,6 @@
 
 > **Understand what your code change REALLY affects.**  
 > Local AI-powered intent drift detection for GitHub Pull Requests. Your code never leaves your machine.
-
-![Status](https://img.shields.io/badge/status-hackathon--ready-7c3aed?style=flat-square)
-![AI](https://img.shields.io/badge/AI-Gemma%204%20E2B%204.6B-4f46e5?style=flat-square)
-![Privacy](https://img.shields.io/badge/privacy-100%25%20local-22c55e?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-gray?style=flat-square)
-
 ---
 
 ## What is PRISM?
@@ -92,7 +86,7 @@ Before you begin, make sure you have:
 ### Step 1 — Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/prism.git
+git clone https://github.com/chemicoholic21/prism.git
 cd prism
 ```
 
