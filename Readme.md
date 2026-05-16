@@ -254,6 +254,12 @@ Check if LM Studio and GitHub are reachable.
 - On GPU (even a mid-range one) expect ~10–20s
 
 ---
+## Screenshots
+
+<img width="809" height="712" alt="image" src="https://github.com/user-attachments/assets/4173fc8e-65a9-4c2d-884e-ecd4c141c783" />
+
+
+---
 
 ## Why PRISM is Different
 
