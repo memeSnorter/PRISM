@@ -7,12 +7,40 @@ import os
 import re
 import json
 from typing import Optional
+from urllib.parse import urlparse
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import httpx
 from github import Github, GithubException
+
+
+# Custom exceptions for URL parsing
+class GitHubUrlError(Exception):
+    """Base exception for GitHub URL parsing errors."""
+    pass
+
+
+class InvalidPrUrlError(GitHubUrlError):
+    """Raised when the URL is not a valid GitHub PR URL."""
+    pass
+
+
+class IssueUrlProvidedError(GitHubUrlError):
+    """Raised when an issue URL is provided instead of a PR URL."""
+    pass
+
+
+# Precompiled regex patterns for GitHub URL parsing
+# Pattern matches: /owner/repo/pull/number or /owner/repo/pulls/number
+_GITHUB_PR_PATTERN = re.compile(
+    r"^/(?P<owner>[^/]+)/(?P<repo>[^/]+)/pulls?/(?P<number>\d+)(?:/.*)?$"
+)
+# Pattern matches: /owner/repo/issues/number
+_GITHUB_ISSUE_PATTERN = re.compile(
+    r"^/(?P<owner>[^/]+)/(?P<repo>[^/]+)/issues/(?P<number>\d+)(?:/.*)?$"
+)
 
 load_dotenv()
 
@@ -56,29 +84,51 @@ class AnalysisResult(BaseModel):
 
 
 def parse_pr_url(pr_url: str) -> tuple[str, str, int]:
-    """Parse GitHub PR URL to extract owner, repo, and PR number."""
-    # Check if user provided an issue URL instead of a PR URL
-    issue_pattern = r"github\.com/([^/]+)/([^/]+)/issues/(\d+)"
-    if re.search(issue_pattern, pr_url):
-        raise ValueError(
+    """
+    Parse GitHub PR URL to extract owner, repo, and PR number.
+
+    Uses urlparse for proper URL validation and precompiled regex patterns
+    for path matching.
+
+    Args:
+        pr_url: A GitHub pull request URL
+
+    Returns:
+        Tuple of (owner, repo, pr_number)
+
+    Raises:
+        IssueUrlProvidedError: If an issue URL is provided instead of a PR URL
+        InvalidPrUrlError: If the URL is not a valid GitHub PR URL
+    """
+    # Parse the URL properly
+    parsed = urlparse(pr_url.strip())
+
+    # Validate it's a GitHub URL
+    if parsed.netloc not in ("github.com", "www.github.com"):
+        raise InvalidPrUrlError(
+            "URL must be from github.com. "
+            "Please provide a URL like: https://github.com/owner/repo/pull/123"
+        )
+
+    # Check if it's an issue URL
+    issue_match = _GITHUB_ISSUE_PATTERN.match(parsed.path)
+    if issue_match:
+        raise IssueUrlProvidedError(
             "This is a GitHub Issue URL, not a Pull Request URL. "
             "PRISM analyzes Pull Requests. Please provide a URL like: "
             "https://github.com/owner/repo/pull/123"
         )
 
-    # PR URL patterns
-    patterns = [
-        r"github\.com/([^/]+)/([^/]+)/pull/(\d+)",
-        r"github\.com/([^/]+)/([^/]+)/pulls/(\d+)",
-    ]
+    # Try to match PR URL pattern
+    pr_match = _GITHUB_PR_PATTERN.match(parsed.path)
+    if pr_match:
+        return (
+            pr_match.group("owner"),
+            pr_match.group("repo"),
+            int(pr_match.group("number"))
+        )
 
-    for pattern in patterns:
-        match = re.search(pattern, pr_url)
-        if match:
-            owner, repo, pr_number = match.groups()
-            return owner, repo, int(pr_number)
-
-    raise ValueError(
+    raise InvalidPrUrlError(
         "Invalid GitHub PR URL. Please provide a URL like: "
         "https://github.com/owner/repo/pull/123"
     )
@@ -292,7 +342,7 @@ async def analyze_pr(request: PRAnalyzeRequest):
     try:
         # Parse PR URL
         owner, repo, pr_number = parse_pr_url(request.pr_url)
-    except ValueError as e:
+    except GitHubUrlError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
     # Fetch PR data from GitHub
