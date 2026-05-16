@@ -48,14 +48,14 @@ export default function PRISMInput({ onAnalyze }: PRISMInputProps) {
             value={prUrl}
             onChange={handleChange}
             placeholder="Paste a GitHub PR URL..."
-            className={`w-full rounded-xl border bg-gray-900 px-6 py-4 text-lg text-white placeholder-gray-500 outline-none transition-all ${
+            className={`w-full rounded-lg border bg-white px-5 py-4 text-base text-gray-900 placeholder-gray-400 outline-none transition-all ${
               isValid
-                ? 'border-gray-700 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20'
-                : 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+                ? 'border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10'
+                : 'border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
             }`}
           />
           {!isValid && (
-            <p className="mt-2 text-sm text-red-400">
+            <p className="mt-2 text-sm text-red-500">
               Please enter a valid GitHub PR URL (e.g., https://github.com/owner/repo/pull/123)
             </p>
           )}
@@ -63,7 +63,7 @@ export default function PRISMInput({ onAnalyze }: PRISMInputProps) {
 
         <button
           type="submit"
-          className="gradient-button w-full rounded-xl py-4 text-lg font-semibold text-white"
+          className="btn-primary w-full rounded-lg py-4 text-base font-medium"
         >
           <span className="flex items-center justify-center gap-2">
             <svg
@@ -91,21 +91,21 @@ export default function PRISMInput({ onAnalyze }: PRISMInputProps) {
           <button
             type="button"
             onClick={() => setPrUrl('https://github.com/facebook/react/pull/27592')}
-            className="rounded-lg bg-gray-800/50 px-3 py-1.5 text-xs text-gray-400 transition hover:bg-gray-800 hover:text-gray-300"
+            className="rounded-md bg-gray-100 px-3 py-1.5 text-xs text-gray-600 transition hover:bg-gray-200"
           >
             facebook/react
           </button>
           <button
             type="button"
             onClick={() => setPrUrl('https://github.com/vercel/next.js/pull/52001')}
-            className="rounded-lg bg-gray-800/50 px-3 py-1.5 text-xs text-gray-400 transition hover:bg-gray-800 hover:text-gray-300"
+            className="rounded-md bg-gray-100 px-3 py-1.5 text-xs text-gray-600 transition hover:bg-gray-200"
           >
             vercel/next.js
           </button>
           <button
             type="button"
             onClick={() => setPrUrl('https://github.com/microsoft/vscode/pull/195000')}
-            className="rounded-lg bg-gray-800/50 px-3 py-1.5 text-xs text-gray-400 transition hover:bg-gray-800 hover:text-gray-300"
+            className="rounded-md bg-gray-100 px-3 py-1.5 text-xs text-gray-600 transition hover:bg-gray-200"
           >
             microsoft/vscode
           </button>

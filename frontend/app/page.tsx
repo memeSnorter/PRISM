@@ -117,7 +117,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-white">
       <Header />
 
       <main className="px-4 py-8 md:py-12">
@@ -126,51 +126,29 @@ export default function Home() {
           {!result && !isLoading && (
             <header className="mb-12 text-center animate-fade-in">
               <div className="mb-6 flex items-center justify-center">
-                <div className="relative">
-                  <svg
-                    className="h-16 w-16 md:h-20 md:w-20"
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <defs>
-                      <linearGradient id="prismGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#a78bfa" />
-                        <stop offset="50%" stopColor="#7c3aed" />
-                        <stop offset="100%" stopColor="#5b21b6" />
-                      </linearGradient>
-                      <linearGradient id="prismGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#c4b5fd" />
-                        <stop offset="100%" stopColor="#8b5cf6" />
-                      </linearGradient>
-                    </defs>
-                    <polygon
-                      points="50,5 95,85 5,85"
-                      fill="none"
-                      stroke="url(#prismGlow)"
-                      strokeWidth="2"
-                      opacity="0.3"
-                      className="pulse-ring"
-                    />
-                    <polygon points="50,15 85,75 15,75" fill="url(#prismGradient)" opacity="0.9" />
-                    <line x1="50" y1="15" x2="50" y2="55" stroke="#ffffff" strokeWidth="1" opacity="0.6" />
-                    <line x1="50" y1="55" x2="30" y2="75" stroke="#a78bfa" strokeWidth="1.5" opacity="0.8" />
-                    <line x1="50" y1="55" x2="50" y2="75" stroke="#7c3aed" strokeWidth="1.5" opacity="0.8" />
-                    <line x1="50" y1="55" x2="70" y2="75" stroke="#5b21b6" strokeWidth="1.5" opacity="0.8" />
-                    <polygon points="50,15 60,35 40,35" fill="#ffffff" opacity="0.2" />
-                  </svg>
-                </div>
+                <svg
+                  className="h-14 w-14 md:h-16 md:w-16"
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <polygon points="50,15 85,75 15,75" fill="#1a1a1a" />
+                  <line x1="50" y1="15" x2="50" y2="55" stroke="#ffffff" strokeWidth="2" />
+                  <line x1="50" y1="55" x2="30" y2="75" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+                  <line x1="50" y1="55" x2="50" y2="75" stroke="#ffffff" strokeWidth="1.5" opacity="0.8" />
+                  <line x1="50" y1="55" x2="70" y2="75" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+                </svg>
               </div>
 
-              <h1 className="mb-3 text-4xl font-bold tracking-tight md:text-5xl">
-                <span className="gradient-text">PRISM</span>
+              <h1 className="mb-3 text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
+                PRISM
               </h1>
-              <p className="mb-2 text-sm font-medium uppercase tracking-widest text-gray-500">
+              <p className="mb-2 text-sm font-medium text-gray-500">
                 Pull Request Intelligence & Security Machine
               </p>
 
-              <p className="mx-auto max-w-md text-lg text-gray-400">
-                Understand what your code change <span className="font-semibold text-white">REALLY</span>{' '}
+              <p className="mx-auto max-w-md text-base text-gray-600">
+                Understand what your code change <span className="font-medium text-gray-900">really</span>{' '}
                 affects.
               </p>
 
@@ -179,7 +157,7 @@ export default function Home() {
                 <div className="mt-6">
                   <button
                     onClick={login}
-                    className="inline-flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition"
+                    className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -196,7 +174,7 @@ export default function Home() {
 
           {/* Success message */}
           {actionSuccess && (
-            <div className="mb-6 rounded-lg bg-green-500/20 border border-green-500/50 p-4 text-green-400 text-center">
+            <div className="mb-6 rounded-lg bg-emerald-50 border border-emerald-200 p-4 text-emerald-700 text-center">
               ✓ {actionSuccess}
             </div>
           )}
@@ -218,13 +196,13 @@ export default function Home() {
           {/* Error State */}
           {error && (
             <div className="mx-auto max-w-2xl animate-fade-in">
-              <div className="rounded-xl border border-red-800 bg-red-950/50 p-6 text-center">
+              <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-center">
                 <div className="mb-4 text-4xl">⚠️</div>
-                <h3 className="mb-2 text-lg font-semibold text-red-400">Analysis Failed</h3>
-                <p className="mb-6 text-gray-400">{error}</p>
+                <h3 className="mb-2 text-lg font-medium text-red-700">Analysis Failed</h3>
+                <p className="mb-6 text-gray-600">{error}</p>
                 <button
                   onClick={handleReset}
-                  className="rounded-lg bg-gray-800 px-6 py-2 font-medium text-white transition hover:bg-gray-700"
+                  className="rounded-lg bg-gray-900 px-6 py-2 font-medium text-white transition hover:bg-gray-800"
                 >
                   Try Again
                 </button>
@@ -241,18 +219,18 @@ export default function Home() {
                 <div className="space-y-6">
                   <ConfidenceGauge score={result.merge_confidence_score} />
 
-                  <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                     <div className="text-center">
-                      <p className="mb-3 text-sm font-medium uppercase tracking-wider text-gray-500">
+                      <p className="mb-3 text-sm font-medium text-gray-500">
                         Intent Match
                       </p>
                       <span
-                        className={`inline-flex rounded-full px-6 py-2 text-lg font-bold ${
+                        className={`inline-flex rounded-md px-5 py-2 text-base font-semibold ${
                           result.intent_match === 'HIGH'
-                            ? 'bg-green-500/20 text-green-400'
+                            ? 'bg-emerald-100 text-emerald-700'
                             : result.intent_match === 'MEDIUM'
-                            ? 'bg-yellow-500/20 text-yellow-400'
-                            : 'bg-red-500/20 text-red-400'
+                            ? 'bg-amber-100 text-amber-700'
+                            : 'bg-red-100 text-red-700'
                         }`}
                       >
                         {result.intent_match}
@@ -287,13 +265,13 @@ export default function Home() {
                 {result.risk_flags.length > 0 && <RiskFlags flags={result.risk_flags} />}
 
                 {result.suspicious_files.length > 0 && (
-                  <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-                    <h3 className="mb-4 text-lg font-semibold text-white">Suspicious Files</h3>
+                  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+                    <h3 className="mb-4 text-base font-medium text-gray-900">Suspicious Files</h3>
                     <div className="flex flex-wrap gap-2">
                       {result.suspicious_files.map((file, index) => (
                         <span
                           key={index}
-                          className="rounded-lg bg-gray-800 px-3 py-1.5 font-mono text-sm text-gray-300"
+                          className="rounded-md bg-gray-100 px-3 py-1.5 font-mono text-sm text-gray-700"
                         >
                           {file}
                         </span>
@@ -302,19 +280,19 @@ export default function Home() {
                   </div>
                 )}
 
-                <div className="rounded-xl border-l-4 border-l-violet-600 border-t border-r border-b border-gray-800 bg-gray-900 p-6">
-                  <h3 className="mb-3 text-lg font-semibold text-white">PRISM Assessment</h3>
-                  <p className="leading-relaxed text-gray-300">{result.summary}</p>
+                <div className="rounded-lg border-l-4 border-l-gray-900 border-t border-r border-b border-gray-200 bg-white p-6 shadow-sm">
+                  <h3 className="mb-3 text-base font-medium text-gray-900">PRISM Assessment</h3>
+                  <p className="leading-relaxed text-gray-600">{result.summary}</p>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap justify-center gap-4 border-t border-gray-800 pt-6">
+                <div className="flex flex-wrap justify-center gap-3 border-t border-gray-200 pt-6">
                   {isAuthenticated && result.owner && result.repo && result.pr_number && (
                     <>
                       <button
                         onClick={generateComment}
                         disabled={isGeneratingComment}
-                        className="flex items-center gap-2 rounded-lg bg-violet-600 px-6 py-3 font-semibold text-white hover:bg-violet-500 disabled:opacity-50"
+                        className="flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50"
                       >
                         {isGeneratingComment ? (
                           <>
@@ -331,7 +309,7 @@ export default function Home() {
 
                       <button
                         onClick={() => setShowMergeModal(true)}
-                        className="flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-500"
+                        className="flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-500"
                       >
                         <span>🔀</span>
                         Merge PR
@@ -344,7 +322,7 @@ export default function Home() {
                       href={result.pr_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 rounded-lg bg-gray-800 px-6 py-3 font-semibold text-white hover:bg-gray-700"
+                      className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
                     >
                       <span>↗</span>
                       View on GitHub
@@ -353,7 +331,7 @@ export default function Home() {
 
                   <button
                     onClick={handleReset}
-                    className="gradient-button rounded-xl px-8 py-3 font-semibold text-white"
+                    className="btn-primary rounded-lg px-5 py-2.5 text-sm font-medium"
                   >
                     Analyze Another PR
                   </button>
@@ -364,7 +342,7 @@ export default function Home() {
 
           {/* Footer */}
           <footer className="mt-16 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-400">
               Runs 100% locally. Your code never leaves your machine.
             </p>
           </footer>
@@ -373,26 +351,26 @@ export default function Home() {
 
       {/* Comment Modal */}
       {showCommentModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-2xl rounded-xl border border-gray-700 bg-gray-900 p-6">
-            <h3 className="mb-4 text-lg font-semibold text-white">Post Comment to PR</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-2xl rounded-lg border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-lg font-medium text-gray-900">Post Comment to PR</h3>
             <textarea
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               rows={12}
-              className="mb-4 w-full rounded-lg border border-gray-700 bg-gray-800 p-4 text-white placeholder-gray-500 focus:border-violet-500 focus:outline-none font-mono text-sm"
+              className="mb-4 w-full rounded-lg border border-gray-300 bg-white p-4 text-gray-900 placeholder-gray-400 focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 font-mono text-sm"
             />
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowCommentModal(false)}
-                className="rounded-lg bg-gray-800 px-4 py-2 text-gray-300 hover:bg-gray-700"
+                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={submitComment}
                 disabled={isCommenting || !commentText.trim()}
-                className="rounded-lg bg-violet-600 px-4 py-2 text-white hover:bg-violet-500 disabled:opacity-50"
+                className="rounded-lg bg-gray-900 px-4 py-2 text-white hover:bg-gray-800 disabled:opacity-50"
               >
                 {isCommenting ? 'Posting...' : 'Post Comment'}
               </button>
@@ -403,15 +381,15 @@ export default function Home() {
 
       {/* Merge Modal */}
       {showMergeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-md rounded-xl border border-gray-700 bg-gray-900 p-6">
-            <h3 className="mb-4 text-lg font-semibold text-white">Merge Pull Request</h3>
-            <p className="mb-4 text-gray-400">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-lg font-medium text-gray-900">Merge Pull Request</h3>
+            <p className="mb-4 text-gray-600">
               Are you sure you want to merge this pull request?
             </p>
 
             <div className="mb-4">
-              <label className="mb-2 block text-sm font-medium text-gray-300">Merge Method</label>
+              <label className="mb-2 block text-sm font-medium text-gray-700">Merge Method</label>
               <div className="flex gap-2">
                 {(['merge', 'squash', 'rebase'] as const).map((method) => (
                   <button
@@ -419,8 +397,8 @@ export default function Home() {
                     onClick={() => setMergeMethod(method)}
                     className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition ${
                       mergeMethod === method
-                        ? 'bg-green-600 text-white'
-                        : 'bg-gray-800 text-gray-400 hover:text-white'
+                        ? 'bg-emerald-600 text-white'
+                        : 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                   >
                     {method.charAt(0).toUpperCase() + method.slice(1)}
@@ -432,14 +410,14 @@ export default function Home() {
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowMergeModal(false)}
-                className="rounded-lg bg-gray-800 px-4 py-2 text-gray-300 hover:bg-gray-700"
+                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={mergePR}
                 disabled={isMerging}
-                className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-500 disabled:opacity-50"
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-500 disabled:opacity-50"
               >
                 {isMerging ? 'Merging...' : 'Confirm Merge'}
               </button>

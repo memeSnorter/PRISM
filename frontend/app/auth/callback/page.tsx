@@ -38,14 +38,14 @@ function AuthCallbackContent() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950">
+      <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="text-center">
           <div className="mb-4 text-4xl">❌</div>
-          <h1 className="mb-2 text-xl font-bold text-white">Authentication Failed</h1>
-          <p className="mb-6 text-gray-400">{error}</p>
+          <h1 className="mb-2 text-xl font-semibold text-gray-900">Authentication Failed</h1>
+          <p className="mb-6 text-gray-500">{error}</p>
           <a
             href="/"
-            className="inline-block rounded-lg bg-violet-600 px-6 py-2 font-medium text-white hover:bg-violet-500"
+            className="inline-block rounded-lg bg-gray-900 px-6 py-2 font-medium text-white hover:bg-gray-800"
           >
             Go Home
           </a>
@@ -55,10 +55,10 @@ function AuthCallbackContent() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-950">
+    <div className="flex min-h-screen items-center justify-center bg-white">
       <div className="text-center">
-        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-violet-600 border-t-transparent mx-auto"></div>
-        <p className="text-gray-400">Completing authentication...</p>
+        <div className="mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-900 border-t-transparent mx-auto"></div>
+        <p className="text-gray-500">Completing authentication...</p>
       </div>
     </div>
   )
@@ -68,10 +68,10 @@ export default function AuthCallback() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-gray-950">
+        <div className="flex min-h-screen items-center justify-center bg-white">
           <div className="text-center">
-            <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-violet-600 border-t-transparent mx-auto"></div>
-            <p className="text-gray-400">Loading...</p>
+            <div className="mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-900 border-t-transparent mx-auto"></div>
+            <p className="text-gray-500">Loading...</p>
           </div>
         </div>
       }
