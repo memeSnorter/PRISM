@@ -316,6 +316,8 @@ Check system status.
 
 <img width="809" height="712" alt="image" src="https://github.com/user-attachments/assets/4173fc8e-65a9-4c2d-884e-ecd4c141c783" />
 
+![1778927875734](image/Readme/1778927875734.png)
+
 
 ---
 
